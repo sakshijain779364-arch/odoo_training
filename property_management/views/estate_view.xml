@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_estate_property_list" model="ir.ui.view">
+        <field name="name">estate.property.list</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <list string="Properties">
+                <field name="name"/>
+                <field name="expected_price"/>
+                <field name="selling_price"/>
+                <field name="postcode"/>
+                <field name="available_dates"/>
+                <field name="living_area"/>
+                <field name="bedrooms"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_estate_property_forms" model="ir.ui.view">
+        <field name="name">estate.property.form</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_sold" string="Sold" type="object"/>
+                    <button name="action_cancel" string="Cancel" type="object"/>
+                    <button name="action_cozy" string="Cozy" type="object"/>
+                    <button name="action_renovate" string="Renovate" type="object"/>
+                    <field name="state" widget="statusbar" statusbar_visible="new,offer_received,offer_accepted,sold"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="postcode"/>
+                        <field name="available_dates"/>
+                        <field name="best_price"/>
+                        <field name="property_type_id"/>
+                    </group>
+                    <group>
+                        <field name="expected_price"/>
+                        <field name="selling_price"/>
+                    </group>
+                    <notebook>
+                        <page string="Description" name="description">
+                            <group string="Description" name="description">
+                                <group>
+                                    <field name="living_area"/>
+                                    <field name="bedrooms"/>
+                                    <field name="facades"/>
+                                    <field name="garage"/>
+                                    <field name="garden"/>
+                                    <field name="garden_area"/>
+                                    <field name="garden_orientation"/>
+                                    <field name="total_area"/>
+
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Offers" name="offers">
+                            <field name="offer_ids">
+                                <list editable="bottom">
+                                    <field name="price"/>
+                                    <field name="partner_id"/>
+                                    <field name="validity"/>
+                                    <field name="date_deadline"/>
+                                    <field name="status"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_estate_property_kanban" model="ir.ui.view">
+    <field name="name">estate.property.kanban</field>
+    <field name="model">estate.property</field>
+    <field name="arch" type="xml">
+
+        <kanban default_group_by="property_type_id"
+                records_draggable="0">
+
+            <field name="state"/>
+            <field name="expected_price"/>
+            <field name="best_price"/>
+            <field name="selling_price"/>
+            <field name="tag_ids"/>
+
+            <templates>
+
+                <t t-name="kanban-box">
+
+                    <div class="oe_kanban_card">
+
+                        <strong>
+                            <field name="name"/>
+                        </strong>
+
+                        <br/>
+
+                        <div>
+                            Expected Price :
+                            <field name="expected_price"/>
+                        </div>
+
+                        <div t-if="record.best_price.raw_value">
+                            Best Price :
+                            <field name="best_price"/>
+                        </div>
+
+                        <div t-if="record.selling_price.raw_value">
+                            Selling Price :
+                            <field name="selling_price"/>
+                        </div>
+
+                        <div>
+                            <field name="tag_ids" widget="many2many_tags"/>
+                        </div>
+
+                        <div t-if="record.state.raw_value == 'new'">
+                            <b>This is New!</b>
+                        </div>
+
+                    </div>
+
+                </t>
+
+            </templates>
+
+        </kanban>
+
+    </field>
+</record>
+
+    <record id="view_estate_property_search" model="ir.ui.view">
+        <field name="name">estate.property.search</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <search string="Properties">
+                <field name="name"/>
+                <field name="postcode"/>
+                <field name="expected_price"/>
+                <field name="bedrooms"/>
+                <field name="living_area"/>
+                <field name="facades"/>
+                <searchpanel>
+                    <!--                        <field name="postcode" icon="fa-users" select="multi"/>-->
+                </searchpanel>
+                <filter name="filter_available_dates" string="Available Date"
+                        domain="[('available_dates', '&lt;=', context_today())]"/>
+                <group expand="0" string="Group By"/>
+                <filter string="Postcode" name="group_by_postcode" context="{'group_by':'postcode'}"/>
+
+            </search>
+        </field>
+    </record>
+    <record id="action_estate_property" model="ir.actions.act_window">
+        <field name="name">Estate</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">estate.property</field>
+        <field name="view_mode">list,form,kanban</field>
+        <field name="context">{}</field>
+        <field name="domain">[]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Estate !
+            </p>
+        </field>
+    </record>
+</odoo>

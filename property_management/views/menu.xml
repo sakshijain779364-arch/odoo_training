@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="menu_property_root"
+              name="Property Management"
+              sequence="30"/>
+
+        <menuitem id="menu_estate"
+                  name="Estate"
+                  parent="menu_property_root"
+                  action="action_estate_property"
+                  sequence="30"/>
+
+        <menuitem id="menu_offer"
+                  name="Offers"
+                  parent="menu_property_root"
+                  action="action_property_offer"
+                  sequence="40"/>
+
+        <menuitem id="menu_types"
+                  name="Property type"
+                  parent="menu_property_root"
+                  action="action_property_type"
+                  sequence="50"/>
+</odoo>
