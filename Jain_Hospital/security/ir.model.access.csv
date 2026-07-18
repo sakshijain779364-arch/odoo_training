@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+Jain_Hospital.access_hospital_patient,access_hospital_patient,Jain_Hospital.model_hospital_patient,base.group_user,1,1,1,1
+Jain_Hospital.access_hospital_appointment,access_hospital_appointment,Jain_Hospital.model_hospital_appointment,base.group_user,1,1,1,1
+Jain_Hospital.access_appointment.pharmacy.lines,access_appointment_pharmacy_lines,Jain_Hospital.model_appointment_pharmacy_lines,base.group_user,1,1,1,1
+Jain_Hospital.access_hospital.doctor,access_hospital_doctor,Jain_Hospital.model_hospital_doctor,base.group_user,1,1,1,1
+Jain_Hospital.access_hospital.prescription,access_hospital_prescription,Jain_Hospital.model_hospital_prescription,base.group_user,1,1,1,1
+Jain_Hospital.access_hospital.prescription.line,access_hospital_prescription_line,Jain_Hospital.model_hospital_prescription_line,base.group_user,1,1,1,1
+Jain_Hospital.access_cancel.appointment,access_cancel_appointment,Jain_Hospital.model_cancel_appointment,base.group_user,1,1,1,1
+Jain_Hospital.access_hospital.operation,access_hospital_operation,Jain_Hospital.model_hospital_operation,base.group_user,1,1,1,1

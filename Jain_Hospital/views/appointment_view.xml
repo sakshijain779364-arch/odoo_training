@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_hospital_appointment_activity" model="ir.ui.view">
+            <field name="name">hospital.appointment.activity</field>
+            <field name="model">hospital.appointment</field>
+            <field name="arch" type="xml">
+                <activity string="Appointment">
+                    <field name="patient_id"/>
+                    <templates>
+                        <div t-name="activity-box">
+                            <img t-att-src="activity_image('hospital.patient', 'image', record.patient_id.raw_value)"
+                                 t-att-title="record.patient_id.value" t-att-alt="record.patient_id.value"/>
+                            <div>
+                                <field name="patient_id" muted="1" display="full"/>
+                            </div>
+                        </div>
+                    </templates>
+                </activity>
+            </field>
+        </record>
+
+        <record id="view_hospital_appointment_list" model="ir.ui.view">
+            <field name="name">hospital.appointment.list</field>
+            <field name="model">hospital.appointment</field>
+            <field name="arch" type="xml">
+                <list decoration-success="state =='done'" decoration-info="state == 'draft'"
+                      decoration-danger="state == 'cancel'" decoration-warning="state == 'consultation'" sample="1"
+                      multi_edit="1">
+                    <header>
+                        <button name="action_consulation" string="Consulation" type="object"/>
+                        <button name="action_create_bill" string="Create Bill" type="object" class="oe_highlight"/>
+                    </header>
+                    <field name="state" column_invisible="True"/>
+                    <field name="patient_id" default_focus="1"/>
+                    <field name="doctor_id" widget="many2one_avatar"/>
+                    <field name="gender" optional="hide"/>
+                    <field name="appointment_date" optional="show"/>
+                    <field name="activity_ids" widget="list_activity"/>
+                    <field name="appointment_number"/>
+                    <field name="state"
+                           decoration-success="state =='done'" decoration-info="state == 'draft'"
+                           decoration-danger="state == 'cancel'"
+                           decoration-warning="state == 'consultation'"
+                           widget="badge"/>
+                    <button name="action_done" class="fa fa-check btn-success" string="Done" title="Mark as Done"
+                            invisible="state in 'consultation'"
+                            type="object"/>
+                    <button name="%(Jain_Hospital.action_hospital_cancel_appointment)d" class="fa fa-times btn-danger"
+                            invisible="state not in 'draft','consultation'"
+                            type="action"/>
+                    <groupby name="patient_id">
+                        <button name="action_test" string="Click Me" type="object" class="oe_highlight"/>
+                        <button name="open_form" string="Edit" type="object"/>
+                    </groupby>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_hospital_appointment_forms" model="ir.ui.view">
+            <field name="name">hospital.appointment.form</field>
+            <field name="model">hospital.appointment</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_send_appointment" string="Send Appointment"
+                                confirm="Your appointment has been successfully scheduled.Please find the details below"
+                                type="object" class="oe_highlight"/>
+                        <button name="%(Jain_Hospital.action_hospital_cancel_appointment)d" string="Cancel"
+                                context="{'default_reason': 'test', 'hide_appointment':1}"
+                                data-hockey="r" type="action"/>
+                        <field name="state" widget="statusbar" nolabel="1" options="{'clickable':'1'}"
+                               statusbar_visible="draft,consultation,done"/>
+                        <button name="action_create_bill" string="Create Bill" type="object" class="oe_highlight"/>
+                        <button name="action_add_prescription" type="object"
+                                string="Add Prescription" class="oe_highlight"/>
+                    </header>
+
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="appointment_sequence" readonly="0"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="patient_id" default_focus="1" widget="selection"/>
+                                <field name="doctor_id" widget="many2one_avatar"/>
+                                <field name="appointment_date"/>
+                                <field name="gender" widget="radio"/>
+                                <field name="appointment_number" readonly="1" force_save="1"/>
+                            </group>
+                            <group>
+                                <field name="hide_pharmacy_price" groups="base.group_no_one"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Prescription" name="prescription">
+                                 <field name="line_ids" widget="sol_o2m">
+                                    <list editable="bottom">
+                                        <field name="medicine_name"/>
+                                        <field name="dosage"/>
+                                        <field name="duration"/>
+                                        <field name="instruction"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Pharmacy" name="pharmacy">
+                                <group>
+                                    <field name="pharmacy_details"/>
+                                </group>
+                            </page>
+                        </notebook>
+
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_hospital_appointment_search" model="ir.ui.view">
+            <field name="name">hospital.appointment.search</field>
+            <field name="model">hospital.appointment</field>
+            <field name="arch" type="xml">
+                <search>
+                    <searchpanel>
+                        <field name="gender" icon="fa-users" select="multi" enable_counters="1"/>
+                    </searchpanel>
+                    <filter name="filter_male" string="Male" domain="[('gender', '=', 'male')]"/>
+                    <filter name="filter_female" string="Female" domain="[('gender', '=', 'female')]"/>
+                    <filter string="Gender" name="group_by_gender" context="{'group_by':'gender'}"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_hospital_appointment" model="ir.actions.act_window">
+            <field name="name">Appointments</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hospital.appointment</field>
+            <field name="view_mode">list,form,search,activity</field>
+            <field name="context">{}</field>
+            <field name="domain">[]</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first Appointment !
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="action_appointment_slip" model="ir.actions.report">
+        <field name="name">Appointment Slip</field>
+        <field name="model">hospital.appointment</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">Jain_Hospital.appointment_slip_report</field>
+        <field name="report_file">Jain_Hospital.appointment_slip_report</field>
+        <field name="binding_model_id" ref="Jain_Hospital.model_hospital_appointment"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="appointment_slip_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+
+                        <h2 class="mt-4 mb-4 text-dark font-weight-bold"
+                            style="border-bottom: 2px solid #714B67; padding-bottom: 10px;">
+                            Appointment Slip
+                        </h2>
+
+                        <div class="card p-3 mb-4"
+                             style="border-radius: 10px; border: 1px solid #cccccc; background-color: #f8f9fa;">
+                            <div class="row">
+                                <div class="col-6 mb-2">
+                                    <strong>Patient Name:</strong>
+                                    <span t-field="o.patient_id.name"/>
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <strong>Appointment Number:</strong>
+                                    <span t-field="o.appointment_sequence"/>
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <strong>Appointment Date:</strong>
+                                    <span t-field="o.appointment_date"/>
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <strong>Doctor Name:</strong>
+                                    <span t-field="o.doctor_id.name"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

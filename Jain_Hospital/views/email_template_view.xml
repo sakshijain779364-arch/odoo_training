@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--Template to send demo mail template for the customer-->
+        <record id="mail_template_schedule_appointment" model="mail.template">
+            <field name="name">Email Template For Schedule Appointment</field>
+            <field name="model_id" ref="Jain_Hospital.model_hospital_appointment"/>
+            <field name="email_from">{{user.email }}</field>
+            <field name="email_to">{{user.email}}</field>
+            <field name="subject">Schedule Appointment {{object.appointment_sequence}}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <div style="justify-content: center;background-color: #714B67; padding:0.6rem;padding-left: 35px;text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;width:40%">
+                        <h2>
+                            Hi
+                            <t t-out="object.patient_id.name"/>
+                        </h2>
+                        <div>
+                            <h3>
+                                Your appointment has been successfully booked<t t-out="object.doctor_id.name"/>. Please
+                                arrive 15 minutes early and bring this confirmation with
+                                <t t-out="object.appointment_sequence"/>
+                                and
+                                <t t-out="object.appointment_date.strftime('%Y-%m-%d %H:%M')"/>
+                                Thank you,[Jain Hospital]
+                            </h3>
+                        </div>
+                    </div>
+                    <br/>
+                    <br/>
+                    Regards,
+                    <br/>
+                    Jain Hospital
+                    <br/>
+                </div>
+            </field>
+        </record>
+
+        <record id="mail_template_appointment_missed" model="mail.template">
+            <field name="name">Appointment Missed Notification</field>
+            <field name="model_id" ref="Jain_Hospital.model_hospital_appointment"/>
+            <field name="email_from">{{user.email }}</field>
+            <field name="email_to">{{user.email}}</field>
+            <field name="subject">Appointment Sequence Appointment Missed Notification</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <div style="justify-content: center; padding:0.6rem;padding-left: 35px;text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;width:40%">
+                        <h2>
+                            Hi
+                            <t t-out="object.patient_id.name ,"/>
+                        </h2>
+                        <div>
+                            <h3>
+                                You missed your appointment today
+                                <t t-out="object.appointment_sequence"/>
+                                on<t t-out="object.appointment_date"/>.Click here to reschedule a new date.
+                            </h3>
+                        </div>
+                    </div>
+                    <br/>
+                    <br/>
+                    Regards,
+                    <br/>
+                    Jain Hospital
+                    <br/>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

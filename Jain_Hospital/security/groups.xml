@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+   <data>
+        <record id="base.module_category_hospital" model="ir.module.category">
+            <field name="description">Hospital Management System with role based access control.</field>
+            <field name="sequence">1</field>
+        </record>
+
+       <record model="res.groups" id="hospital_staff_group">
+           <field name="name">Staff</field>
+           <field name="category_id" ref="base.module_category_hospital"/>
+       </record>
+
+        <record model="res.groups" id="hospital_manager_group">
+           <field name="name">Manager</field>
+           <field name="category_id" ref="base.module_category_hospital"/>
+            <field name="implied_ids" eval="[(4, ref('hospital_staff_group'))]"/>
+
+       </record>
+   </data>
+</odoo>

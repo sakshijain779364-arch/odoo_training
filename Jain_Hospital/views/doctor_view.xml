@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_hospital_doctor_list" model="ir.ui.view">
+            <field name="name">hospital.doctor.list</field>
+            <field name="model">hospital.doctor</field>
+            <field name="arch" type="xml">
+        <list>
+            <field name="name"/>
+            <field name="specialization"/>
+        </list>
+            </field>
+        </record>
+
+        <record id="view_hospital_doctor_forms" model="ir.ui.view">
+            <field name="name">hospital.doctor.form</field>
+            <field name="model">hospital.doctor</field>
+            <field name="arch" type="xml">
+        <form>
+                   <header>
+                       <button name="action_available" string="Available" class="oe_highlight"
+                               type="object" invisible="doctor_availability"/>
+                       <button name="action_away" string="Away"
+                               confirm="Dr.is away until.Please book an alternate doctor here"
+                               type="object"  class="oe_highlight" invisible="not doctor_availability"/>
+                   </header>
+                   <sheet>
+                       <group>
+                           <field name="name"/>
+                           <field name="name_2"/>
+                           <field name="specialization"/>
+                           <field name="doctor_availability" widget="boolean_toggle" readonly="1"/>
+                       </group>
+                   </sheet>
+        </form>
+            </field>
+        </record>
+
+        <record id="view_hospital_doctor_search" model="ir.ui.view">
+            <field name="name">hospital.doctor.search</field>
+            <field name="model">hospital.doctor</field>
+            <field name="arch" type="xml">
+               <search>
+               </search>
+            </field>
+        </record>
+
+        <record id="view_hospital_doctor_kanban" model="ir.ui.view">
+            <field name="name">hospital.doctor.kanban</field>
+            <field name="model">hospital.doctor</field>
+            <field name="arch" type="xml">
+              <kanban sample="1">
+                    <field name="active"/>
+                    <templates>
+                        <t t-name="card" class="flex-row">
+                            <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                            <main class="ps-2 ps-md-0">
+                                <div class="mb-1">
+                                    <field name="display_name"/>
+                                </div>
+                                <field name="specialization"/>
+                                <footer><div/></footer>
+                            </main>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="action_hospital_doctor" model="ir.actions.act_window">
+            <field name="name">Doctor</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hospital.doctor</field>
+            <field name="view_mode">kanban,list,form,search</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first Doctor !
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

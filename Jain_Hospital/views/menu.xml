@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <menuitem id="menu_hospital_root"
+                  name="Hospital Services"
+                  web_icon="Jain_Hospital,static/description/icon.png"
+                  sequence="80">
+
+             <menuitem id="menu_patient"
+                  name="Patient"
+                  action="action_hospital_patient"
+                       groups="Jain_Hospital.hospital_staff_group"
+                  sequence="0"/>
+
+             <menuitem id="menu_appointment"
+                  name="Appointment"
+                  action="action_hospital_appointment"
+                       groups="Jain_Hospital.hospital_staff_group"
+
+                  sequence="10"/>
+
+            <menuitem id="menu_doctor"
+                  name="Doctor"
+                  action="action_hospital_doctor"
+                      groups="Jain_Hospital.hospital_manager_group"
+
+                  sequence="60"
+            />
+
+            <menuitem id="menu_cancel_appointment"
+                  name="Cancellation"
+                  action="action_hospital_cancel_appointment"
+                  sequence="50"/>
+
+        </menuitem>
+        <menuitem id="menu_configuration"
+                  name="Configuration"
+                  groups="Jain_Hospital.hospital_manager_group"
+                  sequence="70"
+                  parent="menu_hospital_root">
+
+        </menuitem>
+
+    </data>
+</odoo>

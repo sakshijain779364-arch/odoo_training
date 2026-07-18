@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="reschedule_appointment_template" model="website.menu">
+        <field name="name">Resuchedule Appointment</field>
+        <field name="url">/resuchedule</field>
+        <field name="parent_id" ref="website.main_menu"/>
+    </record>
+    <template id="rescuhedule_appointment_template" name="Reschedule Detail">
+        <t t-call="website.layout">
+            <div class="oe_structure">
+                <div class="container">
+                    <div class="row">
+                        <center>
+                            <h3>Reschedule Appointment</h3>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

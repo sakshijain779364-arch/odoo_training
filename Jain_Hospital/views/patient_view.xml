@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_hospital_patient_list" model="ir.ui.view">
+            <field name="name">hospital.patient.list</field>
+            <field name="model">hospital.patient</field>
+            <field name="arch" type="xml">
+                <list export_xlsx="1">
+                    <field name="name"/>
+                    <field name="gender"/>
+                    <field name="age" avg="Average Age"/>
+                    <field name="appointment_date"/>
+                    <field name="appointment_count" sum="Total Appointment"/>
+
+                </list>
+            </field>
+        </record>
+        <record id="view_hospital_patient_forms" model="ir.ui.view">
+            <field name="name">hospital.patient.form</field>
+            <field name="model">hospital.patient</field>
+            <field name="arch" type="xml">
+                <form>
+
+                    <header>
+                        <button name="%(Jain_Hospital.action_hospital_patient)d" string="Schedule Appointment"
+                                class="oe_highlight"
+                                type="action"/>
+                        <button name="action_demo_orm" string="Execute ORM" type="object" class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                         <div name="button_box" position="inside">
+                        <button name="action_view_appointment" string="Appointment" class="oe_stat_button" type="object" icon="fa-list-ul"
+                            invisible="appointment_count == 0">
+                        <field name="appointment_count" widget="statinfo" string="Appointment"/>
+                        </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="patient_sequence" readonly="0"/>
+                            </h1>
+                        </div>
+                        <field name="image" widget="image" class="oe_avatar"/>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="age"/>
+                                <field name="gender" invisible="context.get('hide_gender')" widget="radio"/>
+                                <field name="date_of_birth"/>
+                                <field name="appointment_count"/>
+                            </group>
+                            <group>
+                                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                <field name="appointment_date"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Other Information" name="other_info">
+                                <group string="Other Information" name="other_info">
+                                    <group>
+                                        <field name="parent" invisible="age > 18 or 'gender' == 'male'"/>
+                                        <field name="marital_status"/>
+                                        <field name="partner_name" readonly="marital_status != 'married'"
+                                               required="marital_status == 'married'" invisible="marital_status == 'married'"/>
+                                    </group>
+                                </group>
+                            </page>
+
+                            <page string="Appointment Lines" name="appointment_line">
+                                <field name="appointment_line" widget="sol_o2m">
+                                    <list string="Sales Order Lines" editable="bottom">
+                                        <field name="appointment_sequence"/>
+                                        <field name="appointment_date"/>
+                                        <field name="gender"/>
+                                        <field name="state"/>
+
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Pharmacy" name="pharmacy">
+                                <group>
+                                    <field name="pharmacy_details"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+        <record id="view_hospital_patient_search" model="ir.ui.view">
+            <field name="name">hospital.patient.search</field>
+            <field name="model">hospital.patient</field>
+            <field name="arch" type="xml">
+                <search>
+                    <searchpanel>
+                        <field name="gender" icon="fa-users" select="multi" enable_counters="1"/>
+                    </searchpanel>
+                    <filter name="filter_male" string="Male" domain="[('gender', '=', 'male')]"/>
+                    <filter name="filter_female" string="Female" domain="[('gender', '=', 'female')]"/>
+                    <separator/>
+                    <filter name="filter_kids" string="kids" domain="[('age', '&lt;=',5)]"/>
+                    <separator/>
+                    <filter name="filter_archived" string="Archived" domain="[('active', '=',False)]"/>
+                    <group expand="0" string="Group By"/>
+                    <filter string="Gender" name="group_by_gender" context="{'group_by':'gender'}"/>
+                </search>
+            </field>
+        </record>
+        <record id="action_hospital_patient" model="ir.actions.act_window">
+            <field name="name">Patients</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hospital.patient</field>
+            <field name="view_mode">list,form</field>
+            <field name="context">{}</field>
+            <field name="domain">[]</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first Patient !
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

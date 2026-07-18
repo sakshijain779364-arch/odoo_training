@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_hospital_prescription_forms" model="ir.ui.view">
+            <field name="name">hospital.prescription.form</field>
+            <field name="model">hospital.prescription</field>
+            <field name="arch" type="xml">
+                <form>
+                        <header>
+<!--                            <button name="action_send_appoinment" string="Send Appointment" class="oe_highlight"-->
+<!--                                           type="object"/>-->
+                        </header>
+                            <sheet>
+                                <footer>
+                                    <button name="action_save" string="Save" type="object" />
+                                    <button string="Discard" special="cancel"/>
+                                </footer>
+                                <group>
+                                   <field name="name"/>
+                                   <field name="notes"/>
+                                </group>
+                                <notebook>
+                            <page string="Prescription Lines" name="prescription_line">
+                                <field name="line_ids" widget="sol_o2m">
+                                    <list editable="bottom">
+                                        <field name="medicine_name"/>
+                                        <field name="dosage"/>
+                                        <field name="duration"/>
+                                        <field name="instruction"/>
+                                    </list>
+                                </field>
+                            </page>
+                                </notebook>
+                            </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_hospital_prescription" model="ir.actions.act_window">
+            <field name="name">Prescription</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hospital.prescription</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first Prescription !
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>
