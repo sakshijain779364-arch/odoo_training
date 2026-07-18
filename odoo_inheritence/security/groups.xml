@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+   <data>
+        <record id="base.module_category_hospital" model="ir.module.category">
+            <field name="description">Property Management System with role based access control.</field>
+            <field name="sequence">1</field>
+        </record>
+
+       <record model="res.groups" id="group_approved_net30">
+           <field name="name">Net30 Approval</field>
+           <field name="category_id" ref="base.module_category_property"/>
+       </record>
+   </data>
+</odoo>

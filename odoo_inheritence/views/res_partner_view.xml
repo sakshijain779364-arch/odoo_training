@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_partner_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group/group/field[@name='is_blacklisted']" position="after">
+                <field name="membership_type"/>
+                <field name="is_net30_approved"/>
+            </xpath>
+        </field>
+    </record>
+
+     <menuitem id="res_partner_menu"
+                action="account.res_partner_action_customer"
+                groups="odoo_inheritence.group_approved_net30"
+                sequence="40"/>
+
+
+</odoo>

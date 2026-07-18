@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_order_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="priority">30</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='partner_id']" position="replace">
+                    <field name="partner_id" string="Patient"/>
+                </xpath>
+                <xpath expr="//field[@name='date_order']" position="replace">
+                    <field name="date_order" string="Appointment Date"/>
+                </xpath>
+
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="confirmed_user_id"/>
+                </xpath>
+
+                <xpath expr="//button[@name='action_quotation_send']" position="before">
+                    <button name="action_sample" string="Sample" type="object" class="oe_highlight"/>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/list//field[@name='price_subtotal']" position="replace">
+                    <field name="price_subtotal"
+                           column_invisible="parent.company_price_include == 'tax_included'"
+                           invisible="is_downpayment"
+                           string="Total"/>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/list//field[@name='product_uom_qty']" position="after">
+                    <field name="remark_line" string="Remark Line"/>
+                </xpath>
+
+                <xpath expr="//field[@name='journal_id']" position="after">
+                    <field name="doctor_line" string="Doctor Line"/>
+                </xpath>
+                 <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="memo" string="Memo"/>
+                </xpath>
+
+                <xpath expr="//page[@name='other_information']" position="after">
+                    <page string="Prescription Lines" name="prescription_lines_page">
+                        <field name="presc_line_ids">
+                            <list editable="bottom">
+                                <field name="medicine_name"/>
+                                <field name="dosage"/>
+                                <field name="duration"/>
+                                <field name="instruction"/>
+                            </list>
+                        </field>
+                    </page>
+                </xpath>
+
+                <xpath expr="//page[@name='other_information']/group/group[@name='sale_info']/field[@name='show_update_fpos']"
+                       position="after">
+                    <field name="membership_type" string="Membership Type"/>
+                </xpath>
+
+            </data>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_custom_report_forms" model="ir.ui.view">
+        <field name="name">custom.report.form</field>
+        <field name="model">custom.report</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                        </group>
+                </sheet>
+                <footer>
+                    <button name="action_print_custom_report" string="Print Report" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_custom_report" model="ir.actions.act_window">
+        <field name="name">Custom Report</field>
+        <field name="res_model">custom.report</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_reporting_custom"
+              name="Custom Report"
+              parent="sale.menu_sale_report"
+              action="odoo_inheritence.action_custom_report"
+              sequence="50"/>
+
+    
+</odoo>
